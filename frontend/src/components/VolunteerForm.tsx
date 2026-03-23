@@ -12,32 +12,43 @@ import {
   type UpdateVolunteerFormData,
 } from "../schemas/volunteerSchema";
 
-type VolunteerFormValues = CreateVolunteerFormData | UpdateVolunteerFormData;
-
-type Props = {
-  mode: "create" | "edit";
-  defaultValues?: Partial<VolunteerFormValues>;
+type CreateProps = {
+  mode: "create";
+  defaultValues?: Partial<CreateVolunteerFormData>;
   isSubmitting?: boolean;
   apiError?: string;
-  onSubmit: (values: VolunteerFormValues) => void;
+  onSubmit: (values: CreateVolunteerFormData) => void | Promise<void>;
   onCancel: () => void;
 };
 
-export default function VolunteerForm({
-  mode,
-  defaultValues,
-  isSubmitting,
-  apiError,
-  onSubmit,
-  onCancel,
-}: Props) {
+type EditProps = {
+  mode: "edit";
+  defaultValues?: Partial<UpdateVolunteerFormData>;
+  isSubmitting?: boolean;
+  apiError?: string;
+  onSubmit: (values: UpdateVolunteerFormData) => void | Promise<void>;
+  onCancel: () => void;
+};
+
+type Props = CreateProps | EditProps;
+
+export default function VolunteerForm(props: Props) {
+  const { 
+    mode,
+    defaultValues,
+    isSubmitting,
+    apiError,
+    onSubmit,
+    onCancel 
+  } = props;
+
   const schema = mode === "create" ? createVolunteerSchema : updateVolunteerSchema;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<VolunteerFormValues>({
+  } = useForm<CreateVolunteerFormData | UpdateVolunteerFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
       nome: "",
@@ -47,12 +58,12 @@ export default function VolunteerForm({
       disponibilidade: "Manhã",
       ...(mode === "edit" ? { status: "ativo" } : {}),
       ...defaultValues,
-    } as VolunteerFormValues,
+    } as CreateVolunteerFormData | UpdateVolunteerFormData,
   });
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((values: CreateVolunteerFormData | UpdateVolunteerFormData) => onSubmit(values as never))}
       className="bg-white border rounded-2xl p-6 md:p-8"
     >
       <h1 className="text-3xl font-semibold text-slate-900">
@@ -156,7 +167,7 @@ export default function VolunteerForm({
               Status *
             </label>
             <select
-              {...register("status" as "status")}
+              {...register("status")}
               className="w-full rounded-lg border px-4 py-3 outline-none"
             >
               {statusOptions.map((status) => (
