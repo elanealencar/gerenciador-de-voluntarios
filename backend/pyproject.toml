@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "gerenciamento-de-voluntarios-backend"
+version = "0.1.0"
+description = "API REST para gerenciamento de voluntários"
+authors = ["Elane Alencar <dev.elanealencar@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.0"
+uvicorn = { extras = ["standard"], version = "^0.30.0" }
+email-validator = "^2.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+httpx = "^0.27.0"
+ruff = "^0.6.0"
+taskipy = "^1.13.0"
+
+[tool.taskipy.tasks]
+run = "uvicorn main:app --reload"
+test = "pytest -v"
+lint = "ruff check ."
+format = "ruff format ."
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
