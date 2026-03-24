@@ -135,11 +135,11 @@ Integração real entre frontend e backend (sem mocks)
 
 ## Telas
 
-![Frontend: Tela inicial](frontend\public\front-tela-inicial.png)
+![Frontend: Tela inicial](https://github.com/elanealencar/gerenciador-de-voluntarios/blob/main/frontend/public/front-tela-inicial.png?raw=true)
 
-![Frontend: Tela de Cadastros](frontend\public\front-cadastro.png)
+![Frontend: Tela de Cadastros](https://github.com/elanealencar/gerenciador-de-voluntarios/blob/main/frontend/public/front-cadastro.png?raw=true)
 
-![Backend: Documentação](frontend\public\back-documentacao.png)
+![Backend: Documentação](https://github.com/elanealencar/gerenciador-de-voluntarios/blob/main/frontend/public/back-documentacao.png?raw=true)
 
 ---
 
